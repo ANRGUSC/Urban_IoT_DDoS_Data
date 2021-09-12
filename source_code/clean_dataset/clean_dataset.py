@@ -128,7 +128,7 @@ def main_generate_benign_data():
     num_nodes = 20
     time_step = 30
 
-    benign_data_output_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/benign_data/benign_data_" +\
+    benign_data_output_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_" +\
                   str(begin_date) + '_' + str(end_date) + "_time_step_" +\
                   str(time_step) + "_num_ids_" + str(num_nodes) + ".csv"
     prepare_output_directory(benign_data_output_path)

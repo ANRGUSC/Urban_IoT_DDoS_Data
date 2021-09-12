@@ -116,7 +116,7 @@ def plot_logs(logs_path, output_path):
 
 
 def main_plot_logs():
-    all_saved_models_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/saved_model/*"
+    all_saved_models_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/saved_model/*"
     for directory in glob.glob(all_saved_models_path):
         print(directory)
         logs_path = directory + "/logs/logs.csv"
@@ -130,14 +130,14 @@ def main_train_model():
     tf.random.set_seed(seed)
     random.seed(seed)
 
-    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/train_data/train_data.csv"
-    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/test_data/test_data.csv"
+    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
+    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
     train_dataset_all = load_dataset(train_dataset_path)
     test_dataset_all = load_dataset(test_dataset_path)
-    model_output_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/saved_model/"
+    model_output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/saved_model/"
     prepare_output_directory(model_output_path)
 
-    initial_model_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/initial_model/"
+    initial_model_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/initial_model/"
     prepare_output_directory(initial_model_path)
 
     num_devices = 1

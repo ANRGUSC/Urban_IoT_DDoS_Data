@@ -147,11 +147,11 @@ def main_generate_features(data_type, num_train_days, num_test_days):
     # path = "Output/attacked_data/train/*.csv"
 
     if data_type == "train":
-        path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/attacked_data/train/*.csv"
+        path = CONFIG.OUTPUT_DIRECTORY + "attack_emulation/Output/attacked_data/train/*.csv"
     else:
-        path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/attacked_data/test/*.csv"
+        path = CONFIG.OUTPUT_DIRECTORY + "attack_emulation/Output/attacked_data/test/*.csv"
 
-    output_directory = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/" + data_type + "_data/"
+    output_directory = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/" + data_type + "_data/"
     prepare_output_directory(output_directory)
     for attacked_dataset_path in glob.glob(path):
         print(attacked_dataset_path)
@@ -168,18 +168,18 @@ def main_combine_data(data_type):
                 higher ratio attacked nodes contain the lower ratio attacked nodes.
     """
     if data_type == "train":
-        input_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/train_data/*.csv"
-        output_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/train_data/train_data.csv"
+        input_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/*.csv"
+        output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
     else:
-        input_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/test_data/*.csv"
-        output_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/test_data/test_data.csv"
+        input_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/*.csv"
+        output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
 
     combine_data(input_path, output_path)
 
 
 if __name__ == "__main__":
-    num_attack_days = 7
-    num_test_days = 7
+    num_attack_days = 1
+    num_test_days = 1
     main_generate_features("train", num_attack_days, num_test_days)
     main_combine_data("train")
     main_generate_features("test", num_attack_days, num_test_days)

@@ -105,11 +105,11 @@ def main_generate_attack(benign_dataset_path, data_type, num_train_days, num_tes
     if data_type == "train":
         attack_begin_date = benign_data.loc[0, "TIME"] + timedelta(days=2)
         attack_end_date = benign_data.loc[0, "TIME"] + timedelta(days=2+num_train_days)
-        output_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/attacked_data/train/"
+        output_path = CONFIG.OUTPUT_DIRECTORY + "attack_emulation/Output/attacked_data/train/"
     else:
         attack_begin_date = benign_data.loc[0, "TIME"] + timedelta(days=2+num_train_days+2)
         attack_end_date = benign_data.loc[0, "TIME"] + timedelta(days=2+num_train_days+2+num_test_days)
-        output_path = CONFIG.OUTPUT_DIRECTORY + "/pre_process/Output/attacked_data/test/"
+        output_path = CONFIG.OUTPUT_DIRECTORY + "attack_emulation/Output/attacked_data/test/"
 
     prepare_output_directory(output_path)
     # set the begin and end date of the dataset to be stored for generating features in generate_training_data.py
@@ -147,7 +147,7 @@ def main_generate_attack(benign_dataset_path, data_type, num_train_days, num_tes
 
 
 if __name__ == "__main__":
-    benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
+    benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
     num_train_days = 1
     num_test_days = 1
 

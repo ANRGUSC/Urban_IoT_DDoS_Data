@@ -219,37 +219,37 @@ def plot_attack_prediction_vs_time(train_result_path, test_result_path, train_ou
 
 
 def main_general_report(metric, mode):
-    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/train_data/train_data.csv"
-    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/test_data/test_data.csv"
+    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
+    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
     train_dataset = load_dataset(train_dataset_path)
     test_dataset = load_dataset(test_dataset_path)
-    model_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/saved_model/"
+    model_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/saved_model/"
 
-    output_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/report/"
+    output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/report/"
 
     generate_general_report(train_dataset, test_dataset, model_path, metric, mode, output_path)
 
 
 def main_generate_attack_prediction_vs_time(metric, mode):
 
-    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/train_data/train_data.csv"
-    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "pre_process/Output/test_data/test_data.csv"
+    train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
+    test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
     train_dataset = load_dataset(train_dataset_path)
     test_dataset = load_dataset(test_dataset_path)
-    model_path_input = CONFIG.OUTPUT_DIRECTORY + "train/Output/saved_model/"
-    output_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/attack_prediction_vs_time/data/"
+    model_path_input = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/saved_model/"
+    output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/data/"
 
     generate_attack_prediction_vs_time(model_path_input, train_dataset, test_dataset, metric, mode, output_path)
 
 
 def main_plot_attack_prediction_vs_time():
-    train_output_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/attack_prediction_vs_time/plot/train/"
-    test_output_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/attack_prediction_vs_time/plot/test/"
+    train_output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/plot/train/"
+    test_output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/plot/test/"
     prepare_output_directory(train_output_path)
     prepare_output_directory(test_output_path)
 
-    train_result_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/attack_prediction_vs_time/data/train_result_" + metric + '_' + mode + ".csv"
-    test_result_path = CONFIG.OUTPUT_DIRECTORY + "train/Output/attack_prediction_vs_time/data/test_result_" + metric + '_' + mode + ".csv"
+    train_result_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/data/train_result_" + metric + '_' + mode + ".csv"
+    test_result_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/data/test_result_" + metric + '_' + mode + ".csv"
 
     plot_attack_prediction_vs_time(train_result_path, test_result_path, train_output_path, test_output_path)
 
