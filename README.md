@@ -1,4 +1,4 @@
-# Urban_IoT_Data
+# Urban_IoT_DDoS_Data
 
 This repository presents the source code for analyzing an Urban IoT Activity Dataset. It helps with generating attacks on the datasets and a neural network model for detecting them.
 
