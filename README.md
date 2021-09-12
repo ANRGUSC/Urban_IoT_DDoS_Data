@@ -12,11 +12,11 @@ The requirements.txt file contains the modules needed to run these scripts and c
 
 The project config file can be found in [/source_code](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code). The path to the output directory can be set in this file.
 
-## Pre-processing the dataset
+## Cleaning the dataset
 
-Before running any code, the original dataset need to be unzip in the [/dataset directory](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/dataset). Three python scripts can be found in [/source_code/pre_process](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/pre_process) folder for pre-processing the raw dataset. 
+Before running any code, the original dataset need to be unzip in the [/dataset directory](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/dataset). One python scripts can be found in [/source_code/clean_dataset](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/clean_dataset) folder for pre-processing the original dataset. 
 
-### pre_process.py
+### clean_dataset.py
 
 This file genrates the bening_dataset which has N nodes and each node has time entries starting from the beginning to the end of original dataset with a step of time_step.
 
@@ -27,6 +27,11 @@ Input:
 
 Output:
 - Benign dataset
+
+
+## Attack emulation
+
+One python scripts can be found in [/source_code/attack_emulation](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/attack_emulation) folder for generating DDoS attack on the original dataset. 
 
 
 ### generate_attack.py
@@ -43,6 +48,12 @@ Input:
 Output:
 - Attacked dataset
 
+
+## Training neural network
+
+Three python scripts can be found in [/source_code/nn_training](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/nn_training) folder for generating the labeled training and testing dataset, train a feed-forward neural network, and generating the results of training.
+
+
 ### generate_training_data.py
 
 This script generates the training data by considering the different time windows for averaging the occupancies on the nodes.
@@ -53,11 +64,6 @@ Input:
 
 Output:
 - Training dataset
-
-
-## Training the dataset
-
-Given the generated training datset in the pre-processing procedure, we provide a feed-forward neural netwrok model to train on the data and detect the attacked nodes and times. Two python scripts can be found in [/source_code/train](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/train) folder for training the dataset and generating the results. 
 
 
 ### train_nn.py
