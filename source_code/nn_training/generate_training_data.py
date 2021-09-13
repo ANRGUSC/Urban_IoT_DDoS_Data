@@ -181,8 +181,8 @@ if __name__ == "__main__":
     num_train_days -- number of days for attacking the dataset for training
     num_test_days -- number of days for attacking the dataset for testing
     """
-    num_train_days = 1
-    num_test_days = 1
+    num_train_days = 7
+    num_test_days = 7
     main_generate_features("train", num_train_days, num_test_days)
     main_combine_data("train")
     main_generate_features("test", num_train_days, num_test_days)

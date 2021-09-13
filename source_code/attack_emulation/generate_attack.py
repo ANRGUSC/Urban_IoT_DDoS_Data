@@ -147,8 +147,8 @@ def main_generate_attack(benign_dataset_path, data_type, num_train_days, num_tes
 
 if __name__ == "__main__":
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
-    num_train_days = 1
-    num_test_days = 1
+    num_train_days = 7
+    num_test_days = 7
 
     main_generate_attack(benign_dataset_path, "train", num_train_days, num_test_days)
     print("generate train data done.")
