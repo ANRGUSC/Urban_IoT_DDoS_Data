@@ -39,7 +39,14 @@ def load_dataset(path):
 
 
 def generate_active_time_mean_all(data, time_step, active_mean_time, active_mean_time_rows):
+    """ Generate the data of the mean active time of the nodes
 
+    Keyword arguments:
+    data -- the main dataset
+    time_step -- the time-step between the rows of the main dataset
+    active_mean_time -- the dataframe template for storing the active mean time information
+    active_mean_time_rows -- the shared variable among all processors for storing the mean active time information
+    """
     data = data.sort_values(by=["TIME"])
     data["TIME_2"] = data["TIME"].dt.time
     data["TIME_2"] = pd.to_datetime(data["TIME_2"].astype(str))
@@ -141,7 +148,12 @@ def generate_active_time_mean_all(data, time_step, active_mean_time, active_mean
 
 
 def plot_active_time_mean_per_entry(data, output_path):
+    """ Plot the mean active time of the nodes according to the entries in the dataset
 
+    Keyword arguments:
+    data -- the data of the mean active time of the nodes
+    output_path -- output path for storing the plots
+    """
     temp = data.loc[data["TIME"] == "DAY"].ACTIVE.sum()
     temp = list(filter(lambda x: x != 0, temp))
     plt.clf()
@@ -192,7 +204,12 @@ def plot_active_time_mean_per_entry(data, output_path):
 
 
 def plot_active_time_mean_per_node(data, output_path):
+    """ Plot the mean active time of the nodes according to the nodes in the dataset
 
+    Keyword arguments:
+    data -- the data of the mean active time of the nodes
+    output_path -- output path for storing the plots
+    """
     nodes = list(data["NODE"].unique())
 
     plot_data = pd.DataFrame()
@@ -272,6 +289,8 @@ def plot_active_time_mean_per_node(data, output_path):
 
 
 def main_generate_active_time_all():
+    """ The main function for generating the data of mean active time of the nodes
+    """
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
     benign_data = load_dataset(benign_dataset_path)
     print("Benign data loaded: ", datetime.now())
@@ -318,6 +337,8 @@ def main_generate_active_time_all():
 
 
 def main_plot_active_time_mean_per_entries():
+    """ The main function for plotting the mean active time of the nodes according to the entries in the dataset
+    """
     dataset_path = CONFIG.OUTPUT_DIRECTORY + "stats/Output/nodes_active_mean_time/data/active_mean_time_all.csv"
     data = pd.read_csv(dataset_path, converters={"ACTIVE": literal_eval, "NOT_ACTIVE": literal_eval})
 
@@ -328,6 +349,8 @@ def main_plot_active_time_mean_per_entries():
 
 
 def main_plot_active_time_mean_per_nodes():
+    """ The main function for plotting the mean active time of the nodes according to the nodes
+    """
     dataset_path = CONFIG.OUTPUT_DIRECTORY + "stats/Output/nodes_active_mean_time/data/active_mean_time_all.csv"
     data = pd.read_csv(dataset_path, converters={"ACTIVE": literal_eval, "NOT_ACTIVE": literal_eval})
 

@@ -110,6 +110,9 @@ def create_benign_dataset(data, begin_date, end_date, time_step, num_nodes, outp
 
 
 def main_generate_benign_data():
+    """ This is the main function for generating the benign_data. The user can set the number of the nodes
+    and also time_step in the code.
+    """
     seed = 10
     random.seed(seed)
     original_data_path = CONFIG.ORIGINAL_DATASET_PATH

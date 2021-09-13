@@ -39,7 +39,14 @@ def load_dataset(path):
 
 
 def generate_correlation_data(data1, data2, plot_data, plot_data_rows):
+    """ Generate the data of correlation information of the nodes vs their distance
 
+    Keyword arguments:
+    data1 -- the dataset of the first node
+    data2 -- the dataset of the second node
+    plot_data -- the dataframe template for storing the correlation
+    plot_data_rows -- the shared variable for storing the correlation data among all processsors
+    """
     node1 = data1["NODE"][0]
     node2 = data2["NODE"][0]
     print("Node 1: ", node1, " - Node 2: ", node2)
@@ -53,7 +60,12 @@ def generate_correlation_data(data1, data2, plot_data, plot_data_rows):
 
 
 def plot_correlation_data(data, output_path):
+    """ Plot the correlation of the nodes vs their distance
 
+    Keyword arguments:
+    data -- the dataset of the pairwise correlation information of the nodes
+    output_path -- output path for storing the plots
+    """
     plt.clf()
     plt.scatter(data["DISTANCE"], data["CORRELATION"])
     plt.xlabel("Distance")
@@ -65,7 +77,12 @@ def plot_correlation_data(data, output_path):
 
 
 def plot_average_correlation_data(data, output_path):
+    """ Plot the mean correlation of the nodes vs their distance
 
+    Keyword arguments:
+    data -- the dataset of the pairwise correlation information of the nodes
+    output_path -- output path for storing the plots
+    """
     data = data.sort_values(by=["DISTANCE"]).reset_index(drop=True)
     min_dist = data["DISTANCE"][0]
     max_dist = data["DISTANCE"][data.shape[0]-1]
@@ -97,6 +114,8 @@ def plot_average_correlation_data(data, output_path):
 
 
 def main_generate_correlation_data():
+    """ The main function for generating the correlation of the nodes vs their distance
+    """
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
     benign_data = load_dataset(benign_dataset_path)
 
@@ -137,6 +156,8 @@ def main_generate_correlation_data():
 
 
 def main_plot_correlation():
+    """ The main function for plotting the correlation of the nodes vs their distance
+    """
     dataset_path = CONFIG.OUTPUT_DIRECTORY + "stats/Output/correlation/correlation.csv"
     plot_data = pd.read_csv(dataset_path)
 

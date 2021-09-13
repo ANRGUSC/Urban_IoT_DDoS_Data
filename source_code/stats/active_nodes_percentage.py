@@ -37,6 +37,13 @@ def load_dataset(path):
 
 
 def active_nodes_percentage_per_day(data, date, output_path):
+    """ Plot the active nodes percentage vs time for a specific day of the dataset
+
+    Keyword arguments:
+    data -- the dataset
+    date -- the desired day for plotting the active nodes percentage vs time
+    output_path -- the output path for storing the plots
+    """
     data = data.loc[(data["TIME"] >= date) & (data["TIME"] < (date+timedelta(hours=24)))]
     temp = data.groupby(["TIME"]).mean().reset_index()
     temp = temp[["TIME", "ACTIVE"]]
@@ -60,6 +67,12 @@ def active_nodes_percentage_per_day(data, date, output_path):
 
 
 def active_nodes_percentage_all(data, output_path):
+    """ Plot the mean of active nodes percentage vs time
+
+    Keyword arguments:
+    data -- the dataset
+    output_path -- the output path for storing the plots
+    """
     data = data.sort_values(by=["TIME"])
     data["TIME_2"] = data["TIME"].dt.time
     data["TIME_2"] = pd.to_datetime(data["TIME_2"].astype(str))
@@ -85,6 +98,8 @@ def active_nodes_percentage_all(data, output_path):
 
 
 def main_active_nodes_percentage_per_day():
+    """ The main function for plotting the active nodes percentage vs time for a specific day of the dataset
+    """
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_120_num_ids_3.csv"
     benign_data = load_dataset(benign_dataset_path)
     benign_data["TIME"] = pd.to_datetime(benign_data["TIME"])
@@ -107,6 +122,8 @@ def main_active_nodes_percentage_per_day():
 
 
 def main_active_nodes_percentage_all():
+    """ The main function for plotting the mean of active nodes percentage vs time for all days
+    """
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
     benign_data = load_dataset(benign_dataset_path)
     benign_data["TIME"] = pd.to_datetime(benign_data["TIME"])

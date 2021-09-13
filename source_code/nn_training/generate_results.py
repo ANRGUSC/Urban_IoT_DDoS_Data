@@ -1,47 +1,63 @@
 import sys
-import glob
-import pylab as pl
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix, classification_report, precision_recall_fscore_support
 import random
 import os
-from multiprocessing import Pool
-from itertools import product
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pickle import load
-
-
 sys.path.append("../")
 import project_config as CONFIG
 
 
 def prepare_output_directory(output_path):
+    """Prepare the output directory by deleting the old files and create an empty directory.
+
+    Keyword arguments:
+    output_path -- path to the output directory
+    """
     dir_name = str(os.path.dirname(output_path))
     os.system("rm -rf " + dir_name)
     os.system("mkdir -p " + dir_name)
 
 
 def load_dataset(path):
+    """Load the dataset and change the type of the "TIME" column to datetime.
+
+    Keyword arguments:
+    path -- path to the dataset
+    """
     data = pd.read_csv(path)
     data["TIME"] = pd.to_datetime(data["TIME"])
     return data
 
 
-def get_input_target(data, num_devices, scaler):
+def get_input_target(data, num_labels, scaler):
+    """ Generate the training and testing dataset by using the corresponding scaler function
+
+    Keyword arguments:
+    data -- the main dataset
+    num_labels -- number of labels
+    scaler -- the scaler function for scaling the dataset
+    """
     temp = data.drop(columns=["TIME", "NODE", "BEGIN_DATE", "END_DATE", "NUM_NODES", "ATTACK_RATIO", "ATTACK_DURATION"])
-    X = temp.iloc[:,0:-num_devices]
-    y = temp.iloc[:,-num_devices:]
+    X = temp.iloc[:,0:-num_labels]
+    y = temp.iloc[:,-num_labels:]
     y = y.astype(int)
     X = scaler.transform(X)
     return X, y
 
 
 def load_model_weights(model_path_input, node, metric, mode):
+    """ Load the neural network model and weights of a node
+
+    Keyword arguments:
+    model_path_input -- the path to the node's neural network model
+    node -- the id of the node
+    metric -- the metric to be used for loading the corresponding weights like "accuracy", "val_accuracy", etc.
+    mode -- it could be "max" or "min" based on the selected metric
+    """
     saved_model_path = model_path_input + str(node) + '/'
     scaler_path = saved_model_path + "scaler.pkl"
     model_path = saved_model_path + "final_model/"
@@ -67,6 +83,16 @@ def load_model_weights(model_path_input, node, metric, mode):
 
 
 def generate_general_report(train_dataset, test_dataset, model_path_input, metric, mode, output_path):
+    """ Generate a report on the training performance like the accuracy of the neural network
+
+    Keyword arguments:
+    train_dataset -- training dataset
+    test_dataset -- testing dataset
+    model_path_input -- the path to the neural network models
+    metric -- the metric to be used for loading the corresponding weights like "accuracy", "val_accuracy", etc.
+    mode -- it could be "max" or "min" based on the selected metric
+    output_path -- the output path for storing the results
+    """
     seed = 1
     tf.random.set_seed(seed)
     random.seed(seed)
@@ -81,9 +107,9 @@ def generate_general_report(train_dataset, test_dataset, model_path_input, metri
         train_dataset_node = train_dataset.loc[train_dataset["NODE"] == node]
         test_dataset_node = test_dataset.loc[test_dataset["NODE"] == node]
 
-        num_devices = 1
-        X_train, y_train = get_input_target(train_dataset_node, num_devices, scaler)
-        X_test, y_test = get_input_target(test_dataset_node, num_devices, scaler)
+        num_labels = 1
+        X_train, y_train = get_input_target(train_dataset_node, num_labels, scaler)
+        X_test, y_test = get_input_target(test_dataset_node, num_labels, scaler)
 
         row = {"node": node}
         evaluate_train = model.evaluate(X_train, y_train, verbose=1, return_dict=True, use_multiprocessing=True)
@@ -104,7 +130,16 @@ def generate_general_report(train_dataset, test_dataset, model_path_input, metri
 
 
 def generate_attack_prediction_vs_time(model_path_input, train_dataset, test_dataset, metric, mode, output_path):
+    """ Generate the data of attack prediction true positive and false positive vs time for all attack ratios and durations
 
+    Keyword arguments:
+    model_path_input -- the path to the neural network models
+    train_dataset -- training dataset
+    test_dataset -- testing dataset
+    metric -- the metric to be used for loading the corresponding weights like "accuracy", "val_accuracy", etc.
+    mode -- it could be "max" or "min" based on the selected metric
+    output_path -- the output path for storing the results
+    """
     seed = 1
     tf.random.set_seed(seed)
     random.seed(seed)
@@ -119,9 +154,9 @@ def generate_attack_prediction_vs_time(model_path_input, train_dataset, test_dat
     for index, node in enumerate(nodes):
         model, scaler = load_model_weights(model_path_input, node, metric, mode)
 
-        num_devices = 1
+        num_labels = 1
         train_dataset_node = train_dataset.loc[train_dataset["NODE"] == node]
-        X_train, y_train = get_input_target(train_dataset_node, num_devices, scaler)
+        X_train, y_train = get_input_target(train_dataset_node, num_labels, scaler)
         y_pred_train = np.rint(model.predict(X_train)).astype(int)
         y_train = np.rint(y_train)
 
@@ -133,7 +168,7 @@ def generate_attack_prediction_vs_time(model_path_input, train_dataset, test_dat
         train_result = train_result.append(train_dataset_2, ignore_index=True)
 
         test_dataset_node = test_dataset.loc[test_dataset["NODE"] == node]
-        X_test, y_test = get_input_target(test_dataset_node, num_devices, scaler)
+        X_test, y_test = get_input_target(test_dataset_node, num_labels, scaler)
         y_pred_test = np.rint(model.predict(X_test)).astype(int)
         y_test = np.rint(y_test)
         test_dataset_2 = test_dataset_node.copy()
@@ -153,6 +188,14 @@ def generate_attack_prediction_vs_time(model_path_input, train_dataset, test_dat
 
 
 def plot_attack_prediction_vs_time(train_result_path, test_result_path, train_output_path, test_output_path):
+    """ Generate the plots of attack prediction true positive and false positive vs time for all attack ratios and durations
+
+    Keyword arguments:
+    train_result_path -- the path to the data of the attack prediction vs time for the training dataset
+    test_result_path -- the path to the data of the attack prediction vs time for the testing dataset
+    train_output_path -- the path to store the plots for the training dataset
+    test_output_path -- the path to store the plots for the testing dataset
+    """
 
     train_result = load_dataset(train_result_path)
     attack_ratios = list(train_result["ATTACK_RATIO"].unique())
@@ -219,6 +262,12 @@ def plot_attack_prediction_vs_time(train_result_path, test_result_path, train_ou
 
 
 def main_general_report(metric, mode):
+    """ The main fuction for generate a report on the training performance like the accuracy of the neural network
+
+    Keyword arguments:
+    metric -- the metric to be used for loading the corresponding weights like "accuracy", "val_accuracy", etc.
+    mode -- it could be "max" or "min" based on the selected metric
+    """
     train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
     test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
     train_dataset = load_dataset(train_dataset_path)
@@ -231,6 +280,12 @@ def main_general_report(metric, mode):
 
 
 def main_generate_attack_prediction_vs_time(metric, mode):
+    """ The main function for generating the data of attack prediction true positive and false positive vs time for all attack ratios and durations
+
+    Keyword arguments:
+    metric -- the metric to be used for loading the corresponding weights like "accuracy", "val_accuracy", etc.
+    mode -- it could be "max" or "min" based on the selected metric
+    """
 
     train_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/train_data/train_data.csv"
     test_dataset_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/test_data/test_data.csv"
@@ -243,6 +298,8 @@ def main_generate_attack_prediction_vs_time(metric, mode):
 
 
 def main_plot_attack_prediction_vs_time():
+    """ The main function for generating the plots of attack prediction true positive and false positive vs time for all attack ratios and durations
+    """
     train_output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/plot/train/"
     test_output_path = CONFIG.OUTPUT_DIRECTORY + "nn_training/Output/attack_prediction_vs_time/plot/test/"
     prepare_output_directory(train_output_path)
