@@ -29,6 +29,42 @@ Output:
 - Benign dataset
 
 
+## Dataset Statistics
+
+Three python scripts can be found in [/source_code/stats](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/stats) folder for generating the statistics of the benign dataset.
+
+
+### active_nodes_percentage.py
+
+This script generates the plots of active nodes percentage vs time.
+
+Input:
+- Benign dataset
+
+Output:
+- Plots of active nodes percentage vs time.
+
+### correlation.py
+
+This script generates the plot of Pearson correlation of nodes vs their distance.
+
+Input:
+- Benign dataset
+
+Output:
+- Plot of Pearson correlation of nodes vs their distance
+
+### nodes_active_mean_time.py
+
+This script generates the histograms of nodes active and inactive mean time vs time of the day.
+
+Input:
+- Benign dataset
+
+Output:
+- Plot histograms of nodes active and inactive mean time vs time of the day
+
+
 ## Attack emulation
 
 One python scripts can be found in [/source_code/attack_emulation](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/attack_emulation) folder for generating DDoS attack on the original dataset. 
@@ -89,42 +125,6 @@ Input:
 Output:
 - General analysis on the training like accuracy, loss, confusion matrix, etc.
 - Plots of true positive, false positive, and true attacks versus time for different attack ratios and durations
-
-## Generate Dataset Statistics
-
-Three python scripts can be found in [/source_code/stats](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/stats) folder for generating the statistics of the benign dataset.
-
-
-### active_nodes_percentage.py
-
-This script generates the plots of active nodes percentage vs time.
-
-Input:
-- Benign dataset
-
-Output:
-- Plots of active nodes percentage vs time.
-
-### correlation.py
-
-This script generates the plot of Pearson correlation of nodes vs their distance.
-
-Input:
-- Benign dataset
-
-Output:
-- Plot of Pearson correlation of nodes vs their distance
-
-### nodes_active_mean_time.py
-
-This script generates the histograms of nodes active and inactive mean time vs time of the day.
-
-Input:
-- Benign dataset
-
-Output:
-- Plot histograms of nodes active and inactive mean time vs time of the day
-
 
 
 ## Acknowledgement
