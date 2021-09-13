@@ -133,6 +133,8 @@ dmypy.json
 .idea
 __pycache__
 source_code/__pycache__
-source_code/pre_process/Output
-source_code/train/Output
+source_code/attack_emulation/Output
+source_code/clean_dataset/Output
+source_code/nn_training/Output
+source_code/stats/Output
 dataset/*.csv
