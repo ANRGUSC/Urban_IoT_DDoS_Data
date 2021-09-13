@@ -1,15 +1,9 @@
-import math
 import sys
 import os
-
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
 from datetime import datetime, timedelta
-import random
-from multiprocessing import Pool
-from itertools import product
-
 sys.path.append("../")
 import project_config as CONFIG
 

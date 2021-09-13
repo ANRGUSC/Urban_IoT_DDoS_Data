@@ -1,4 +1,3 @@
-import math
 import pandas as pd
 from datetime import datetime, timedelta
 from itertools import product
@@ -6,10 +5,6 @@ from multiprocessing import Pool
 import sys
 import random
 import os
-from geopandas import GeoSeries
-from shapely.geometry import Point
-from haversine import haversine
-
 sys.path.append("../")
 import project_config as CONFIG
 

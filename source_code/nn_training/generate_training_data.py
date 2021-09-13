@@ -5,9 +5,6 @@ import pandas as pd
 from datetime import datetime, timedelta
 from itertools import product
 from multiprocessing import Pool, Manager
-import multiprocessing
-import statistics
-
 sys.path.append("../")
 import project_config as CONFIG
 

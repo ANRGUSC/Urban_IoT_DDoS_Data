@@ -2,17 +2,13 @@ import sys
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.metrics import confusion_matrix, multilabel_confusion_matrix, classification_report
 from sklearn.utils import resample
 import random
 import os
 from pickle import dump
 import matplotlib.pyplot as plt
 import glob
-from datetime import datetime
-
 sys.path.append("../")
 import project_config as CONFIG
 
