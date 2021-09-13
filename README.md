@@ -90,6 +90,43 @@ Output:
 - General analysis on the training like accuracy, loss, confusion matrix, etc.
 - Plots of true positive, false positive, and true attacks versus time for different attack ratios and durations
 
+## Generate Dataset Statistics
+
+Three python scripts can be found in [/source_code/stats](https://github.com/ANRGUSC/Urban_IoT_Data/tree/main/source_code/stats) folder for generating the statistics of the benign dataset.
+
+
+### active_nodes_percentage.py
+
+This script generates the plots of active nodes percentage vs time.
+
+Input:
+- Benign dataset
+
+Output:
+- Plots of active nodes percentage vs time.
+
+### correlation.py
+
+This script generates the plot of Pearson correlation of nodes vs their distance.
+
+Input:
+- Benign dataset
+
+Output:
+- Plot of Pearson correlation of nodes vs their distance
+
+### nodes_active_mean_time.py
+
+This script generates the histograms of nodes active and inactive mean time vs time of the day.
+
+Input:
+- Benign dataset
+
+Output:
+- Plot histograms of nodes active and inactive mean time vs time of the day
+
+
+
 ## Acknowledgement
 
    This material is based upon work supported in part by Defense Advanced Research Projects Agency (DARPA) under Contract No. HR001120C0160 for the Open, Programmable, Secure 5G (OPS-5G) program. Any views, opinions, and/or findings expressed are those of the author(s) and should not be interpreted as representing the official views or policies of the Department of Defense or the U.S. Government. 
