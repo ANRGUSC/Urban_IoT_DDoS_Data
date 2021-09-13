@@ -293,10 +293,8 @@ def main_generate_active_time_all():
     """
     benign_dataset_path = CONFIG.OUTPUT_DIRECTORY + "clean_dataset/Output/benign_data/benign_data_2021-01-02 00:00:00_2021-02-01 23:59:58_time_step_30_num_ids_20.csv"
     benign_data = load_dataset(benign_dataset_path)
-    print("Benign data loaded: ", datetime.now())
 
     benign_data = benign_data.sort_values(by=["NODE"]).reset_index(drop=True)
-    print("benign_data sorted: ", datetime.now())
 
     dataset_list = []
     time_step = 30
@@ -309,20 +307,14 @@ def main_generate_active_time_all():
         dataset_list.extend([selected_data])
         start_index += index_step
 
-
-    print("Dataset_list created: ", datetime.now())
     del benign_data
-    print("benign data deleted: ", datetime.now())
     active_mean_time = pd.DataFrame(columns=["NODE", "DATE", "TIME", "ACTIVE", "NOT_ACTIVE"])
 
     manager = Manager()
     active_mean_time_rows = manager.list([active_mean_time])
-    print("active_mean_time_rows added to manager: ", datetime.now())
 
     output_path = CONFIG.OUTPUT_DIRECTORY + "stats/Output/nodes_active_mean_time/data/"
     prepare_output_directory(output_path)
-    print("Output directory prepared: ", datetime.now())
-    print("Start preparing processors pool: ", datetime.now())
 
     p = Pool()
     p.starmap(generate_active_time_mean_all, product(dataset_list, [time_step], [active_mean_time],
